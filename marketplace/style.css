@@ -1,0 +1,166 @@
+/* Resetando margens e paddings para consistência */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo do corpo da página */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #050505;
+    color: #333;
+    display: flex;
+    height: 100vh;
+    overflow: hidden; /* Impede que o conteúdo ultrapasse a tela */
+}
+
+/* Menu lateral */
+nav {
+    width: 100px;  /* Menu pequeno */
+    background-color: #000000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding-top: 15px;
+    box-shadow: 1px 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+/* Estilo dos links dentro do menu */
+nav a {
+    display: block;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 15px 25px;
+    margin: 15px 0;
+    font-size: 10px;
+    text-transform: uppercase;
+    border-radius: 15px;  /* Borda arredondada */
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #1d2024;  /* Cor de fundo dos botões */
+}
+
+/* Efeito de hover nos botões */
+nav a:hover {
+    background-color: #1900fa;
+    transform: translateX(10px);
+    box-shadow: 0 0 8px rgba(26, 188, 156, 0.6);  /* Efeito de glow (brilho) */
+}
+
+/* Estilo do conteúdo principal */
+main {
+    margin-left: 60px;  /* Espaço para o menu */
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #030303;
+    padding: 40px;
+}
+
+/* Seções */
+.section {
+    display: none;
+    padding: 0px 0;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Estilo dos produtos */
+.produto {
+    display: inline-block;
+    width: 22%;  /* Ajuste de largura para desktop */
+    margin: 1.5%;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.produto:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.produto h2 {
+    font-size: 22px;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.produto-imagem {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-bottom: 1px solid #ffffff;
+}
+
+/* Remover sublinhado e ajustar a cor dos links */
+.produto a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Mantém a cor do texto definida no pai */
+}
+
+.produto a:hover {
+    text-decoration: none; /* Mantém sem sublinhado no hover */
+    color: #1d09d1; /* Opcional: muda a cor no hover */
+}
+
+/* Rodapé */
+footer {
+    background-color: #efeff0;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    nav {
+        width: 10px;  /* Menu um pouco maior para telas médias */
+    }
+
+    main {
+        margin-left: 90px;
+        padding: 20px;
+    }
+
+    .produto {
+        width: 30%;  /* Ajustando o tamanho dos produtos */
+    }
+}
+
+/* Ajustes para dispositivos móveis (max-width: 480px) */
+@media (max-width: 480px) {
+    nav {
+        width: 25%;  /* Menu bem pequeno em telas muito pequenas */
+        padding-top: 30px;  /* Ajustando o padding */
+    }
+
+    main {
+        margin-left: 2; /* Remover a margem esquerda do menu */
+        padding: 25px; /* Menos padding para mais espaço */
+    }
+
+    nav a {
+        padding: 25px 15px; /* Menos padding nos links */
+        font-size: 16px; /* Ajuste no tamanho da fonte */
+    }
+
+    .produto {
+        width: 100%;  /* Produtos ocupam toda a largura disponível */
+        margin: 8px 0;  /* Ajuste nas margens */
+    }
+}
+
