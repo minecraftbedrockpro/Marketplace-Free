@@ -8,24 +8,29 @@
 /* Estilo do corpo da página */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #050505;
-    color: #333;
+    background-color: #050505;  /* Cor de fundo */
+    background-image: url('images/nome-da-imagem-fundo.png');  /* Imagem de fundo */
+    background-size: cover;  /* Cobrir toda a página */
+    background-repeat: no-repeat;  /* Não repetir a imagem */
+    background-attachment: fixed;  /* Fixa a imagem ao fundo */
+    color: #fff;  /* Mudança na cor do texto para melhor contraste */
     display: flex;
-    height: 100vh;
-    overflow: hidden; /* Impede que o conteúdo ultrapasse a tela */
+    flex-direction: column;  /* Alinha os itens em coluna */
+    min-height: 100vh;
 }
 
-/* Menu lateral */
+/* Menu inferior */
 nav {
-    width: 100px;  /* Menu pequeno */
+    width: 100%;  /* Menu ocupa toda a largura */
     background-color: #000000;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: fixed;  /* Fixa o menu na parte inferior */
     bottom: 0;
-    padding-top: 15px;
-    box-shadow: 1px 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    left: 0;  /* Garante que o menu esteja alinhado à esquerda */
+    padding: 15px 0;
+    box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;  /* Centraliza o conteúdo do menu */
+    z-index: 1000;  /* Garante que o menu fique acima do conteúdo */
 }
 
 /* Estilo dos links dentro do menu */
@@ -33,13 +38,12 @@ nav a {
     display: block;
     color: rgb(255, 255, 255);
     text-decoration: none;
-    padding: 15px 25px;
-    margin: 15px 0;
-    font-size: 10px;
+    padding: 10px 20px;
+    margin: 0 15px;
+    font-size: 12px;
     text-transform: uppercase;
     border-radius: 15px;  /* Borda arredondada */
     font-weight: bold;
-    text-align: center;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     background-color: #1d2024;  /* Cor de fundo dos botões */
 }
@@ -47,25 +51,30 @@ nav a {
 /* Efeito de hover nos botões */
 nav a:hover {
     background-color: #1900fa;
-    transform: translateX(10px);
+    transform: translateY(-2px);
     box-shadow: 0 0 8px rgba(26, 188, 156, 0.6);  /* Efeito de glow (brilho) */
 }
 
 /* Estilo do conteúdo principal */
 main {
-    margin-left: 60px;  /* Espaço para o menu */
     flex-grow: 1;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;  /* Alinha ao topo */
     background-color: #030303;
     padding: 40px;
+    padding-bottom: 150px;  /* Espaço suficiente para o menu inferior */
+    overflow-y: auto;
+    width: 100%;  /* Garante que o main ocupe toda a largura */
 }
 
 /* Seções */
 .section {
     display: none;
-    padding: 0px 0;
+    padding: 20px 0;
+    width: 100%;
+    text-align: center; /* Centraliza o texto dentro da seção */
 }
 
 .section.active {
@@ -75,10 +84,10 @@ main {
 /* Estilo dos produtos */
 .produto {
     display: inline-block;
-    width: 22%;  /* Ajuste de largura para desktop */
-    margin: 1.5%;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    width: 24%;  /* Ajuste de largura para desktop */
+    margin: 1.2%;
+    background-color: #000000;
+    border: 3px solid #0011ff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -86,16 +95,18 @@ main {
     text-align: center;
 }
 
+/* Estilo consistente para os títulos dos produtos */
+.produto h2 {
+    font-size: 22px;  /* Tamanho de fonte consistente */
+    color: #ffffff;
+    margin: 0px 0;  /* Espaçamento consistente */
+    text-align: center;  /* Centralizado */
+    line-height: 1.5;  /* Altura da linha para melhor legibilidade */
+}
+
 .produto:hover {
     transform: translateY(-10px);
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-.produto h2 {
-    font-size: 22px;
-    color: #333;
-    margin-top: 15px;
-    margin-bottom: 10px;
 }
 
 .produto-imagem {
@@ -127,40 +138,40 @@ footer {
 
 /* Responsividade */
 @media (max-width: 768px) {
-    nav {
-        width: 10px;  /* Menu um pouco maior para telas médias */
-    }
-
-    main {
-        margin-left: 90px;
-        padding: 20px;
-    }
-
     .produto {
-        width: 30%;  /* Ajustando o tamanho dos produtos */
+        width: 48%;  /* Ajustando o tamanho dos produtos */
+    }
+
+    nav a {
+        margin: 0 10px;  /* Menor margem nos links */
+        font-size: 10px;  /* Ajuste no tamanho da fonte */
     }
 }
 
 /* Ajustes para dispositivos móveis (max-width: 480px) */
 @media (max-width: 480px) {
     nav {
-        width: 25%;  /* Menu bem pequeno em telas muito pequenas */
-        padding-top: 30px;  /* Ajustando o padding */
+        padding-top: 10px;  /* Ajustando o padding */
+        flex-direction: column;  /* Mudando para coluna */
     }
 
     main {
-        margin-left: 2; /* Remover a margem esquerda do menu */
-        padding: 25px; /* Menos padding para mais espaço */
+        padding: 21px; /* Menos padding para mais espaço */
+        padding-bottom: 290px;  /* Mais espaço para garantir que o conteúdo não fique atrás do menu */
     }
 
     nav a {
-        padding: 25px 15px; /* Menos padding nos links */
-        font-size: 16px; /* Ajuste no tamanho da fonte */
+        padding: 8px 12px; /* Menos padding nos links */
+        font-size: 14px; /* Ajuste no tamanho da fonte */
+        margin: 5px 0; /* Ajustando a margem para a coluna */
     }
 
     .produto {
         width: 100%;  /* Produtos ocupam toda a largura disponível */
         margin: 8px 0;  /* Ajuste nas margens */
     }
-}
 
+    .section {
+        padding: 10px 0;  /* Menor padding nas seções */
+    }
+}

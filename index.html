@@ -6,6 +6,7 @@
     <title>Marketplace</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="minecoin.png" type="image/png">
+    <div id="app-version"></div>
     <script src="javascript.js"></script>
     <script>
         function showSection(id) {
@@ -27,10 +28,10 @@
         <a href="#" onclick="showSection('textura-packs')">Textura Packs</a>
         <a href="#" onclick="showSection('shaders-packs')">Shaders Packs</a>
         <a href="#" onclick="showSection('skin-packs')">Skin Packs</a>
-    </nav>  
+    </nav>    
     <main>
         <!-- Seção Mapas World -->
-        <div id="mapas-world" class="section active">
+        <div id="mapas-world" class="section section-map">
             <div class="produto">
                 <a href="https://www.mediafire.com/file/lq5vgr2r10x89lo/Tinycraft+(world_template).mctemplate/file">
                     <h2>Tinycraft</h2>
@@ -56,14 +57,14 @@
                 </a>
             </div>
             <div class="produto">
-                <a href="https://www.mediafire.com/file/6a4xhx7bklmxsor/Star_Wars__Path_of_the_Jedi_%28world_template%29.mctemplate/file ">
-                    <h2>Star Wars Caminho dos Jedi </h2>
+                <a href="https://www.mediafire.com/file/6a4xhx7bklmxsor/Star_Wars__Path_of_the_Jedi_%28world_template%29.mctemplate/file">
+                    <h2>Star Wars: Caminho dos Jedi</h2>
                     <img src="images/Star_Wars_Path_of_the_Jedi.jpg" alt="world 5" class="produto-imagem">
                 </a>
             </div>
             <div class="produto">
                 <a href="https://www.mediafire.com/file/zpd8ug9wcl5xuy6/Como_treinar_seu_dragon_%28world_template%29.mctemplate/file">
-                    <h2>Como treinar seu dragão</h2>
+                    <h2>Treinar seu dragão</h2>
                     <img src="images/como_treinar_seu_dragão.jpg" alt="world 6" class="produto-imagem">
                 </a>
             </div>
@@ -77,11 +78,12 @@
                 <a href="https://www.dropbox.com/scl/fo/nwusrc1d85akxajje0v1h/AC8tOUiKx5M3XHar4NVagD8?dl=0&e=1&preview=Teenage+Mutant+Ninja+Turtles+(world_template).mctemplate&rlkey=qam8vdt1v06ud5vqu89krmxyz&st=5ammvgm8">
                     <h2>Tartarugas Ninjas</h2>
                     <img src="images/teenagemutantninjaturtles_Thumbnail_0.jpg" alt="world 8" class="produto-imagem">
+                </a>
             </div>
             <div class="produto">
-              <a href="https://www.mediafire.com/file/hk1xuvhpfbf5h1a/Egg+Tycoon+(world_template).mctemplate/file">
-                   <h2>Egg Tycoon</h2>
-                   <img src="images/eggtycoon_thumbnail_0.jpg" alt="world 9" class="produto-imagem">
+                <a href="https://www.mediafire.com/file/hk1xuvhpfbf5h1a/Egg+Tycoon+(world_template).mctemplate/file">
+                    <h2>Egg Tycoon</h2>
+                    <img src="images/eggtycoon_thumbnail_0.jpg" alt="world 9" class="produto-imagem">
                 </a>
             </div>
             <div class="produto">
@@ -94,35 +96,33 @@
                 <a href="https://www.dropbox.com/scl/fi/omoj5air2qdpfca27y8dw/RealismCraft-world_template.mctemplate?rlkey=npufunorv7jgojw6htad6npra&st=5mr9cp93&dl=0">
                     <h2>Realism Craft 1.5</h2>
                     <img src="images/RealismCraft_Thumbnail_0.jpg" alt="world 11" class="produto-imagem">
-              </a>
-              </div>
-              <div class="produto">
+                </a>
+            </div>
+            <div class="produto">
                 <a href="https://www.mediafire.com/file/q2oe3qsw7yd38t5/SpongeBob+SquarePants+(world_template).mctemplate/file">
                     <h2>Bob Esponja</h2>
                     <img src="images/SpongeBob_SpongeBobAddOn_.net_1170x500.jpg" alt="world 12" class="produto-imagem">
                 </a>
-              </div>
-              <div class="produto">
+            </div>
+            <div class="produto">
                 <a href="https://app.mediafire.com/99b8myx1upy57">
-                    <h2>MINHA VIDA EM SAKURA SHORES</h2>
+                    <h2>Sakura Shores</h2>
                     <img src="images/sakura_shores_Thumbnail_0.jpg" alt="world 13" class="produto-imagem">
                 </a>
-              </div>
-              <div class="produto">
+            </div>
+            <div class="produto">
                 <a href="https://www.dropbox.com/scl/fi/qw8uwlrfwz2d3x10k7rr1/Sonic-the-Hedgehog-world_template.mctemplate?rlkey=p13rdh6qokppe8uyw1m1ahbya&st=3zxs1xui&dl=0">
-                    <h2>SONIC O OURO</h2>
-                    <img src="images/Sonic_Thumbnail_0.jpg" alt="world  14" class="produto-imagem">
+                    <h2>Sonic</h2>
+                    <img src="images/Sonic_Thumbnail_0.jpg" alt="world 14" class="produto-imagem">
                 </a>
-              </div>
-
             </div>
         </div>
-
+    
         <!-- Seção Addons -->
-        <div id="addons" class="section">
+        <div id="addons" class="section section-addons">
             <div class="produto">
                 <a href="https://www.mediafire.com/file/exr2201qirj42r7/Animations++Add-On+(addon).mcaddon/file">
-                    <h2>Add-on Animations++</h2>
+                    <h2>Animations++</h2>
                     <img src="images/A_Thumbnail_0.jpg" alt="Addon 1" class="produto-imagem">
                 </a>
             </div>
@@ -134,14 +134,14 @@
             </div>
             <div class="produto">
                 <a href="https://www.dropbox.com/scl/fi/1s06yavvixp19b5p0jzev/DWELLERS-Add-On-by-Panascais-addon.mcaddon?rlkey=ol7j7pwbrydo7d5sz45qdm2pa&st=6o0b9mcl&dl=0">
-                    <h2>MORADORES 2.0 Add-On</h2>
+                    <h2>Dwellers 2.0</h2>
                     <img src="images/Dwellers_Thumbnail_0.jpg" alt="addon 3" class="produto-imagem">
-                 </a>
+                </a>
             </div>
         </div>
-
+    
         <!-- Seção Textura Packs -->
-        <div id="textura-packs" class="section">
+        <div id="textura-packs" class="section section-texture">
             <div class="produto">
                 <a href="https://www.mediafire.com/file/cpx467im8bhgwd6/Actions__Stuff_1.1_%28resources%29.mcpack/file">
                     <h2>Actions & Stuff 1.1</h2>
@@ -149,15 +149,15 @@
                 </a>
             </div>
             <div class="produto">
-                <a href="https://www.mediafire.com/file/rwvjmaps4s4kg21/§5Astral+§8[§716x§8]§f+(resources).mcpack/file">
+                <a href="https://www.mediafire.com/file/rwvjmaps4s4kg21/%C2%A75Astral+%C2%A78[%C2%A716x%C2%A78]%C2%A7f+(resources).mcpack/file">
                     <h2>Astral [16x]</h2>
                     <img src="images/Astral_Thumbnail_0.jpg" alt="Textura Pack 2" class="produto-imagem">
                 </a>
             </div>
         </div>
-
+    
         <!-- Seção Shaders Packs -->
-        <div id="shaders-packs" class="section">
+        <div id="shaders-packs" class="section section-shaders">
             <div class="produto">
                 <a href="https://www.mediafire.com/file/mizc8g57b8oprk4/Classic+Shaders+(resources).mcpack/file">
                     <h2>Classic Shaders</h2>
@@ -201,17 +201,22 @@
                 </a>
             </div> 
         </div>
-
+    
         <!-- Seção Skin Packs -->
-        <div id="skin-packs" class="section">
+        <div id="skin-packs" class="section section-skins">
             <div class="produto">
                 <a href="https://www.dropbox.com/scl/fi/gfupf9btusrxzk628zc79/Teenage-Mutant-Ninja-Turtles-skin_pack.mcpack?rlkey=lx75pfhq16jp9x2g8tner3pnd&st=zi2rjw65&dl=0">
                     <h2>Tartarugas Ninjas Skins</h2>
                     <img src="images/teenagemutantninjaturtles_Thumbnail_0.jpg" alt="Skin Pack 1" class="produto-imagem">
                 </a>
             </div>
+        <div class="produto">
+            <a href="https://www.dropbox.com/scl/fi/x4xpx4tgza47shbq9h2bl/Star-Wars-Path-of-the-Jedi-Skins-skin_pack.mcpack?rlkey=bznvhx7ckpghvj7o2a1nqnqho&dl=0">
+                <h2>Star Wars: Jedi Skins</h2>
+                <img src="images/Star_Wars_Path_of_the_Jedi.jpg" alt="Skin Pack 2" class="produto-imagem">
+            </a>
         </div>
-    </main>
+    </main>    
     <script>
         function showSection(id) {
             // Salva a seção ativa no localStorage
