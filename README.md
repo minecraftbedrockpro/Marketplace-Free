@@ -21,12 +21,12 @@ DLC significa **"Downloadable Content"** (Conteúdo para Download). No Minecraft
 
 ### Aplicativo para Windows
 
-1. Baixe o aplicativo mais recente na seção de [releases](https://github.com/minecraftbedrock/MarketPlace-Free/releases).
+1. Baixe o aplicativo mais recente na seção de [releases](https://github.com/minecraftbedrockpro/Marketplace-Free/releases).
 2. Execute o instalador e siga as instruções na tela.
 
 ### Aplicativo para Android
 
-1. Baixe o APK mais recente na seção de [releases](https://github.com/minecraftbedrock/MarketPlace-Free/releases).
+1. Baixe o APK mais recente na seção de [releases](https://github.com/minecraftbedrockpro/Marketplace-Free/releases).
 2. Instale o APK no seu dispositivo Android. Certifique-se de permitir a instalação de fontes desconhecidas.
 
 ## Uso
