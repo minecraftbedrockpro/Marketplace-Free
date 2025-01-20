@@ -1,72 +1,56 @@
-function showSection(id) {
-    // Esconde todas as seções
-    var sections = document.querySelectorAll('.section');
-    sections.forEach(function(section) {
-        section.classList.remove('active');
-    });
+document.addEventListener('DOMContentLoaded', (event) => {
+    console.log("JavaScript carregado!");
 
-    // Mostra a seção selecionada
-    document.getElementById(id).classList.add('active');
+    // Criar o HUD dinamicamente
+    const hud = document.createElement('div');
+    hud.id = 'hud';
+    hud.classList.add('hud');
+
+    // Criar o item da versão
+    const versionElement = document.createElement('div');
+    versionElement.id = 'version';
+    versionElement.classList.add('hud-item');
+    versionElement.style.color = '#00ff00'; // Cor verde para a versão
+    versionElement.textContent = 'Versão: 1.0.0';
+    hud.appendChild(versionElement);
+
+    // Criar o alerta de Skins/Maps
+    const skinsMapsAlert = document.createElement('div');
+    skinsMapsAlert.id = 'skinsMapsAlert';
+    skinsMapsAlert.classList.add('hud-item', 'alert');
+    skinsMapsAlert.style.color = '#ff0000'; // Cor vermelha para o alerta
+    skinsMapsAlert.textContent = 'Skins Packs e Mapas World 4D não suportados';
+    hud.appendChild(skinsMapsAlert);
+
+    // Adicionar o HUD ao body
+    document.body.appendChild(hud);
+});
+// Função para mostrar o modal
+function showModal() {
+    modal.style.display = 'flex';
 }
 
-// Recupera a seção ativa ao carregar a página
-window.onload = function() {
-    const savedSection = localStorage.getItem('activeSection');
-    if (savedSection && document.getElementById(savedSection)) {
-        showSection(savedSection);
-    } else {
-        // Mostra a seção principal (default) se nada estiver salvo
-        showSection('mapas-world');
-    }
+// Selecionar elementos
+const modal = document.getElementById('modal');
+const closeModalButton = document.querySelector('.close');
 
-    function showSection(id) {
-        // Salva a seção ativa no localStorage
-        localStorage.setItem('activeSection', id);
-    
-        // Esconde todas as seções
-        var sections = document.querySelectorAll('.section');
-        sections.forEach(function(section) {
-            section.classList.remove('active');
-        });
-    
-        // Mostra a seção selecionada
-        document.getElementById(id).classList.add('active');
-    }
-    
-    // Recupera a seção ativa ao carregar a página
-    window.onload = function() {
-        const savedSection = localStorage.getItem('activeSection');
-        if (savedSection && document.getElementById(savedSection)) {
-            showSection(savedSection);
-        } else {
-            // Mostra a seção principal (default) se nada estiver salvo
-            showSection('mapas-world');
-        }
-    };
-}
-function search() {
-    // Obtém o valor da pesquisa
-    var input = document.getElementById('searchInput').value.toLowerCase();
-    // Obtém todos os elementos h2
-    var h2s = document.querySelectorAll('h2');
-    var found = false;
+// Verificar se o modal já foi exibido
+const isModalShown = localStorage.getItem('modalShown');
 
-    h2s.forEach(function(h2) {
-        // Verifica se o texto do h2 corresponde ao valor da pesquisa
-        if (h2.textContent.toLowerCase().includes(input)) {
-            // Mostra a seção correspondente
-            showSection(h2.closest('.section').id);
-            // Destaca o h2 correspondente
-            h2.style.backgroundColor = 'yellow';
-            found = true;
-        } else {
-            // Remove o destaque dos h2s que não correspondem
-            h2.style.backgroundColor = '';
-        }
-    });
-
-    if (!found) {
-        alert("Nenhum resultado encontrado.");
-    }
+// Se o modal não foi exibido, mostrar e marcar como exibido
+if (!isModalShown) {
+    showModal();
+    localStorage.setItem('modalShown', 'true');
 }
 
+// Fechar modal ao clicar no botão X
+closeModalButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+// Fechar modal ao clicar fora do conteúdo
+window.addEventListener('click', (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});

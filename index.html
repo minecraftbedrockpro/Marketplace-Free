@@ -5,28 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketplace Free v1.0</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="minecoin.png" type="image/png">
-    <script src="javascript.js"></script>
-    <script>
-        function showSection(id) {
-            // Esconde todas as seções
-            var sections = document.querySelectorAll('.section');
-            sections.forEach(function(section) {
-                section.classList.remove('active');
-            });
-
-            // Mostra a seção selecionada
-            document.getElementById(id).classList.add('active');
+    <style>
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-    </script>
+    
+        .modal-content {
+    background-color: #000000; /* Fundo do conteúdo preto */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 450px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra */
+    border: 2px solid blue; /* Borda azul de 2px */
+}
+
+    
+        .modal-content ul {
+            list-style-position: inside; /* Posição dos pontos dentro da lista */
+            padding-left: 0; /* Remover espaçamento à esquerda */
+            margin: 0; /* Remover margens */
+            text-align: left; /* Alinhar à esquerda */
+        }
+    
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #aaa;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .close:hover {
+            color: #ff0000; /* Vermelho ao passar o mouse */
+        }
+    </style>
 </head>
 <body>
+
+
+    <!-- Modal (Tela de introdução) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2 style="color: #00ff00;">Versão Atual: <span>1.0</span></h2>
+            <p style="color: #1e90ff;">Verifique se há alguma versão nova:</p>
+            <a href="https://github.com/minecraftbedrockpro/Marketplace-Free/releases" target="_blank" style="color: #1e90ff;">https://github.com/minecraftbedrockpro/Marketplace-Free/Versões</a>
+            <h3 style="color: #1e90ff;">Modificações em:</h3>
+            <ul>
+                <li>Mapas</li>
+                <li>Addons</li>
+                <li>Texturas</li>
+                <li>Shaders</li>
+                <li>Skins</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        // Selecionar elementos
+        const modal = document.getElementById('modal');
+        const closeModalButton = document.querySelector('.close');
+    
+        // Fechar modal ao clicar no botão X
+        closeModalButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    
+        // Fechar modal ao clicar fora do conteúdo
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    
+        // Checar se o modal já foi mostrado
+        if (!localStorage.getItem('modalShown')) {
+            modal.style.display = 'flex';
+            localStorage.setItem('modalShown', 'true');
+        }
+    </script>
+</body>
+</html>
     <nav>
-        <a href="#" onclick="showSection('mapas-world')">Mapas World</a>
-        <a href="#" onclick="showSection('addons')">Addons</a>
-        <a href="#" onclick="showSection('textura-packs')">Textura Packs</a>
-        <a href="#" onclick="showSection('shaders-packs')">Shaders Packs</a>
-        <a href="#" onclick="showSection('skin-packs')">Skin Packs</a>
+        <a href="#Mapas" onclick="showSection('mapas-world')">Mapas World</a>
+        <a href="#Addons" onclick="showSection('addons')">Addons</a>
+        <a href="#Texturas" onclick="showSection('textura-packs')">Textura Packs</a>
+        <a href="#Shaders" onclick="showSection('shaders-packs')">Shaders Packs</a>
+        <a href="#Skins" onclick="showSection('skin-packs')">Skin Packs</a>
     </nav>
     <main>
         <!-- Seção Mapas World -->
@@ -413,7 +492,11 @@
         </a>
     </div>
 </div>
-
+<div id="hud" class="hud">
+    <div id="version" class="hud-item">Versão: 1.0.0</div>
+    <!-- Mensagem de 4D Skins Maps -->
+    <div id="skinsMapsAlert" class="hud-item alert">4D Skins/Mapas não suportados</div>
+</div>
 </main>
 <script>
     function showSection(id) {

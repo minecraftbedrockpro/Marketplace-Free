@@ -9,7 +9,6 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #050505;  /* Cor de fundo */
-    background-image: url('images/nome-da-imagem-fundo.png');  /* Imagem de fundo */
     background-size: cover;  /* Cobrir toda a página */
     background-repeat: no-repeat;  /* Não repetir a imagem */
     background-attachment: fixed;  /* Fixa a imagem ao fundo */
@@ -203,7 +202,6 @@ section p {
     border-radius: 50px;
     border: 2px solid rgb(255, 255, 255);
 }
-
 /* Adicionando estados interativos para botões */
 button, .button {
     outline: none; /* Remove a borda padrão ao focar */
@@ -220,4 +218,77 @@ button:focus, .button:focus {
 button:active, .button:active {
     background-color: #003a80; /* Altere conforme necessário */
     color: white; /* Altere conforme necessário */
+}
+
+body {
+    display: flex; /* Usar flexbox para organizar os elementos */
+    min-height: 100vh; /* Garantir que o corpo ocupe a altura total da tela */
+    margin: 0; /* Remover margens padrão */
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.left-sidebar {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #000000; /* Cor de fundo da barra lateral */
+    color: white;
+    width: 200px; /* Largura da barra lateral */
+    height: 100vh; /* Altura da barra lateral */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Estilo das seções */
+.section {
+    padding: 20px;
+    background-color: #000000; /* Cor de fundo das seções */
+    border: 1px solid #000000; /* Cor da borda das seções */
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* Estilo geral do HUD (diminuindo tamanho) */
+.hud {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.3);  /* Fundo semi-transparente */
+    color: white;
+    padding: 5px;  /* Diminui o espaçamento interno */
+    border-radius: 5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 12px;  /* Reduz o tamanho da fonte */
+    z-index: 9999;  /* Garantir que fique acima de outros elementos */
+    width: auto;  /* Ajuste automático para o conteúdo */
+}
+
+/* Estilo dos itens dentro do HUD (diminuindo o tamanho) */
+.hud-item {
+    margin: 3px 0;  /* Menor margem entre os itens */
+    font-size: 12px;  /* Reduz o tamanho da fonte */
+}
+
+/* Ajustes para o alerta de "4D Skins Maps não suportados" */
+#skinsMapsAlert {
+    color: #ff0000;  /* Alerta em vermelho */
+    font-weight: bold;
+}
+
+/* Estilo para a versão (não será alterado, mas pode ser ajustado se necessário) */
+#version {
+    color: #00ff00;  /* Cor verde para a versão */
+    font-weight: bold;
+}
+
+/* Se você quiser esconder essa mensagem dinamicamente via JavaScript, pode criar uma classe oculta */
+.hidden {
+    display: none;
 }
