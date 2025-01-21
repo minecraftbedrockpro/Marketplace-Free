@@ -29,28 +29,3 @@ document.addEventListener('DOMContentLoaded', (event) => {
 function showModal() {
     modal.style.display = 'flex';
 }
-
-// Selecionar elementos
-const modal = document.getElementById('modal');
-const closeModalButton = document.querySelector('.close');
-
-// Verificar se o modal já foi exibido
-const isModalShown = localStorage.getItem('modalShown');
-
-// Se o modal não foi exibido, mostrar e marcar como exibido
-if (!isModalShown) {
-    showModal();
-    localStorage.setItem('modalShown', 'true');
-}
-
-// Fechar modal ao clicar no botão X
-closeModalButton.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
-
-// Fechar modal ao clicar fora do conteúdo
-window.addEventListener('click', (event) => {
-    if (event.target === modal) {
-        modal.style.display = 'none';
-    }
-});
