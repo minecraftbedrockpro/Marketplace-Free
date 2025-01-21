@@ -25,7 +25,7 @@ nav {
     position: fixed;  /* Fixa o menu na parte inferior */
     bottom: 0;
     left: 0;  /* Garante que o menu esteja alinhado à esquerda */
-    padding: 15px 0;
+    padding: 21px 0;
     box-shadow: 0 -1px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;  /* Centraliza o conteúdo do menu */
@@ -37,9 +37,9 @@ nav a {
     display: block;
     color: rgb(255, 255, 255);
     text-decoration: none;
-    padding: 10px 20px;
-    margin: 0 15px;
-    font-size: 12px;
+    padding: 15px 30px;  /* Aumenta o padding para expandir o botão */
+    margin: 0 20px;  /* Aumenta a margem */
+    font-size: 14px;  /* Aumenta o tamanho da fonte */
     text-transform: uppercase;
     border-radius: 15px;  /* Borda arredondada */
     font-weight: bold;
@@ -83,7 +83,7 @@ main {
 /* Estilo dos produtos */
 .produto {
     display: inline-block;
-    width: 24%;  /* Ajuste de largura para desktop */
+    width: 29%;  /* Ajuste de largura para desktop */
     margin: 1.2%;
     background-color: #000000;
     border: 3px solid #0011ff;
