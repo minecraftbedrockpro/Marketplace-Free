@@ -1,0 +1,312 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita rolagem horizontal */
+}
+
+.header {
+    background-color: #000; /* Preto */
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    width: 100%; /* Faz o cabeçalho ocupar toda a largura */
+    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
+    box-sizing: border-box; /* Garante que o padding não altere a largura */
+}
+
+.header #logo-banner {
+    height: 25px; /* Ajuste o tamanho conforme necessário */
+}
+
+/* Estilo para a barra de busca */
+#search-bar {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #000000; /* Altere a cor de fundo conforme necessário */
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Estilo para a barra de busca quando focada */
+#search-bar:focus {
+    border-color: #ffffff;
+    outline: none;
+    background-color: #000000; /* Cor de fundo ao focar */
+}
+
+.container {
+    display: flex;
+    margin-top: 80px; /* Deixa espaço para o cabeçalho fixo */
+}
+
+.sidebar {
+    background-color: #000; /* Preto */
+    color: white;
+    padding: 20px;
+    width: 200px;
+    min-height: 100vh;
+    position: fixed; /* Fixa o menu na lateral */
+    top: 80px; /* Deixa espaço para o cabeçalho */
+    left: 0;
+    z-index: 999; /* Garante que o menu fique acima do conteúdo */
+}
+
+/* Estilo para os botões do menu lateral */
+.sidebar button {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza conteúdo horizontalmente */
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #aa141400; /* Quase preto */
+    color: rgb(255, 255, 255);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center; /* Centraliza texto */
+    transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Estilo para o ícone e texto do botão */
+.sidebar .icon {
+    height: 30px;
+    margin-right: 3px; /* Espaçamento entre ícone e texto */
+}
+
+/* Estilo para o botão selecionado */
+.sidebar button.selected {
+    border: 2px solid #00ff00; /* Borda verde para o botão selecionado */
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #222; /* Cor de fundo cinza escuro */
+    color: white;
+    margin-left: 220px; /* Deixa espaço para o menu fixo */
+    padding-top: 20px; /* Dá uma folga no topo para o conteúdo */
+    height: calc(100vh - 80px); /* A altura do conteúdo deve ser o restante da altura da tela após o cabeçalho */
+    overflow-y: auto; /* Permite rolagem apenas na área de conteúdo */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo de largura/altura */
+}
+
+.content #results {
+    margin-top: 20px;
+    height: 100%; /* Asegura que o contêiner de resultados ocupe toda a altura da seção */
+    display: flex;
+    flex-wrap: wrap; /* Faz os produtos quebrarem para a próxima linha */
+    justify-content: flex-start; /* Alinha os produtos no início */
+    gap: 20px; /* Espaço entre os produtos */
+}
+
+.produto {
+    display: inline-block;
+    width: 200px;
+    margin: 5px 5px; /* Adiciona margem para espaçar os produtos */
+    text-align: center;
+    border: 2px solid #000000; /* Adiciona uma borda preta ao contêiner */
+    border-radius: 8px; /* Borda arredondada */
+    padding: 1px; /* Adiciona padding para espaçamento interno */
+    transition: transform 0.2s;
+}
+
+.produto a {
+    text-decoration: none;  /* Remove o sublinhado */
+    color: inherit;         /* Herda a cor do contêiner */
+    display: block;         /* Faz o link ocupar toda a área do produto */
+    pointer-events: auto;   /* Permite interação com o link */
+}
+
+.produto a:hover {
+    pointer-events: none; /* Desabilita o comportamento de hover para evitar o tooltip */
+}
+
+.produto-imagem {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Borda arredondada */
+}
+
+.produto:hover {
+    transform: scale(1.05); /* Efeito de zoom no contêiner */
+}
+
+.produto h2 {
+    font-size: 19px;
+    margin: 10px 0 0; /* Ajusta a margem superior para mover o título para cima */
+}
+
+.no-results {
+    background-color: #222; /* Cor de fundo cinza escuro */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    height: 100%; /* Garante que a área de "Nenhum produto encontrado" ocupe toda a altura */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+/* Estilo para os botões de redes sociais em coluna */
+.social-buttons {
+    display: flex;
+    flex-direction: column; /* Coloca os ícones em uma coluna */
+    align-items: center;     /* Centraliza os ícones horizontalmente */
+    margin-top: 20px;        /* Ajuste o espaço superior conforme necessário */
+    position: absolute;      /* Permite controlar a posição dos ícones */
+    bottom: 120px;            /* Coloca os ícones no fundo da tela */
+    left: 25px;              /* Ajuste a distância da lateral esquerda */
+}
+
+.social-btn {
+    margin: 10px 0; /* Espaço entre os ícones */
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+}
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    /* Ajustes para a barra de navegação e cabeçalho */
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .header #logo-banner {
+        height: 40px; /* Ajuste o tamanho da logo */
+    }
+
+    #search-bar {
+        width: 100%;
+        margin-top: 10px; /* Dá espaço entre a logo e a barra de pesquisa */
+    }
+
+    /* Ajuste para a sidebar */
+    .sidebar {
+        width: 100%;
+        position: relative;
+        top: 100px; /* Ajuste o espaço após o cabeçalho */
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .sidebar button {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .social-buttons {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .social-buttons a {
+        margin: 0 10px;
+    }
+
+    .social-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Ajuste para o conteúdo */
+    .content {
+        margin-left: 0;
+        padding: 10px;
+        height: auto;
+    }
+
+    .content #results {
+        margin-top: 10px;
+    }
+
+    .produto {
+        width: 45%;
+        margin: 10px 5%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajuste para telas muito pequenas */
+    .header {
+        padding: 5px;
+    }
+
+    .header #logo-banner {
+        height: 30px; /* Ajuste para telas muito pequenas */
+    }
+
+    #search-bar {
+        width: 100%;
+        font-size: 14px;
+    }
+
+    .sidebar button {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .social-buttons {
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin-top: 10px;
+    }
+
+    .social-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .produto {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+/* Estilo para a barra de rolagem geral */
+::-webkit-scrollbar {
+    width: 12px; /* Largura da barra de rolagem */
+}
+
+/* Estilo para a trilha da barra de rolagem */
+::-webkit-scrollbar-track {
+    background: #222; /* Cor de fundo da trilha */
+}
+
+/* Estilo para o polegar da barra de rolagem */
+::-webkit-scrollbar-thumb {
+    background-color: #555; /* Cor do polegar */
+    border-radius: 10px; /* Borda arredondada do polegar */
+    border: 3px solid #222; /* Espaço ao redor do polegar */
+}
+
+/* Estilo para o polegar da barra de rolagem quando está ativo */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #777; /* Cor do polegar ao passar o mouse */
+}

@@ -1,0 +1,220 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Evita rolagem horizontal */
+}
+
+.header {
+    background-color: #000; /* Preto */
+    padding: 15px;
+    display: flex;
+    flex-direction: column; /* Organiza os elementos verticalmente */
+    align-items: flex-start; /* Alinha os elementos à esquerda */
+    position: fixed; /* Fixa o cabeçalho no topo */
+    top: 0;
+    left: 0;
+    width: 100%; /* Faz o cabeçalho ocupar toda a largura */
+    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
+    box-sizing: border-box; /* Garante que o padding não altere a largura */
+}
+
+.header #logo-banner {
+    height: 35px; /* Ajuste o tamanho conforme necessário */
+    margin-bottom: 10px;
+}
+
+/* Estilo para a barra de busca */
+#search-bar {
+    width: 74%; /* Ocupa toda a largura do cabeçalho */
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    background-color: #000000; /* Altere a cor de fundo conforme necessário */
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+/* Estilo para a barra de busca quando focada */
+#search-bar:focus {
+    border-color: #ffffff;
+    outline: none;
+    background-color: #ffffff; /* Cor de fundo ao focar */
+}
+
+.menu-icon {
+    font-size: 30px; /* Tamanho do ícone */
+    cursor: pointer;
+    color: white;
+    display: block; /* Visível em dispositivos móveis */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1001; /* Garante que o botão fique acima de outros elementos */
+}
+
+/* Estilo para a sidebar em dispositivos móveis */
+.sidebar {
+    background-color: #000; /* Preto */
+    color: white;
+    padding: 20px;
+    padding-top: 120px; /* Adiciona um espaçamento no topo para ficar abaixo do cabeçalho */
+    width: auto; /* Largura automática para se ajustar ao conteúdo */
+    height: 100vh; /* Altura total da tela */
+    position: fixed; /* Fixa o menu na lateral */
+    top: 0;
+    left: -300px; /* Inicialmente oculto fora da tela */
+    z-index: 999; /* Garante que o menu fique acima do conteúdo */
+    transition: left 0.3s ease; /* Animação para abrir e fechar o menu */
+    white-space: nowrap; /* Evita que os botões quebrem em múltiplas linhas */
+}
+
+.sidebar.open {
+    left: 0; /* Exibe o menu lateral */
+}
+
+/* Estilo para os botões do menu lateral */
+.sidebar button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Alinha o texto à esquerda */
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #aa141400; /* Quase preto */
+    color: white;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap; /* Evita que o texto do botão quebre em várias linhas */
+}
+
+.sidebar .icon {
+    height: 30px;
+    margin-right: 10px; /* Espaçamento entre ícone e texto */
+}
+
+.sidebar button.selected {
+    border: 2px solid #00ff00; /* Borda verde para o botão selecionado */
+}
+
+.content {
+    padding: 20px;
+    background-color: #222; /* Cor de fundo cinza escuro */
+    color: white;
+    margin-top: 100px; /* Deixa espaço para o cabeçalho fixo */
+    height: calc(100vh - 100px); /* A altura do conteúdo deve ser o restante da altura da tela após o cabeçalho */
+    overflow-y: auto; /* Permite rolagem apenas na área de conteúdo */
+    box-sizing: border-box; /* Inclui padding e bordas no cálculo de largura/altura */
+}
+
+.content #results {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Faz os produtos quebrarem para a próxima linha */
+    justify-content: center; /* Centraliza os produtos */
+    gap: 10px; /* Espaço entre os produtos */
+}
+
+.produto {
+    display: inline-block;
+    width: calc(100% - 20px); /* Ajusta a largura do produto para ocupar a tela toda menos as margens */
+    margin: 10px 5px; /* Adiciona margem para espaçar os produtos */
+    text-align: center;
+    border: 2px solid #000000; /* Adiciona uma borda preta ao contêiner */
+    border-radius: 8px; /* Borda arredondada */
+    padding: 5px; /* Adiciona padding para espaçamento interno */
+    transition: transform 0.2s;
+}
+
+.produto-imagem {
+    width: 100%; /* Ajusta a imagem para ocupar toda a largura do contêiner */
+    height: auto;
+    border-radius: 8px; /* Borda arredondada */
+}
+
+.produto h2 {
+    font-size: 18px; /* Tamanho da fonte um pouco menor para dispositivos móveis */
+    margin: 10px 0 5px; /* Ajusta a margem superior para mover o título para cima */
+}
+
+.produto a {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Herda a cor do contêiner */
+    display: block; /* Faz o link ocupar toda a área do produto */
+    pointer-events: auto; /* Permite interação com o link */
+}
+
+.produto:hover {
+    transform: scale(1.05); /* Efeito de zoom no contêiner */
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .produto {
+        width: calc(100% - 20px); /* Ajusta a largura do produto para ocupar a tela toda menos as margens */
+        margin: 10px 5px; /* Adiciona margem para espaçar os produtos */
+    }
+
+    .produto h2 {
+        font-size: 16px; /* Tamanho da fonte menor para dispositivos móveis */
+    }
+}
+
+@media (max-width: 480px) {
+    .produto {
+        width: calc(100% - 20px); /* Ajusta a largura do produto para ocupar a tela toda menos as margens */
+        margin: 10px 5px; /* Adiciona margem para espaçar os produtos */
+    }
+
+    .produto h2 {
+        font-size: 14px; /* Tamanho da fonte ainda menor para telas muito pequenas */
+    }
+}
+
+
+.no-results {
+    background-color: #222; /* Cor de fundo cinza escuro */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin: 0;
+    height: 100%; /* Garante que a área de "Nenhum produto encontrado" ocupe toda a altura */
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+}
+
+/* Ocultar botões sociais em dispositivos móveis */
+.social-buttons {
+    display: flex;
+    flex-direction: column; /* Coloca os ícones em uma coluna */
+    align-items: center; /* Centraliza os ícones horizontalmente */
+    margin-top: 20px; /* Ajuste o espaço superior conforme necessário */
+}
+
+@media (max-width: 768px) {
+    .social-buttons {
+        display: none; /* Oculta os botões sociais em dispositivos móveis */
+    }
+}
+/* Estilo para o título da seção "Procure" */
+#procure-section h1 {
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+}
+.menu-icon {
+    font-size: 30px; /* Tamanho do ícone */
+    cursor: pointer;
+    color: white;
+    display: block; /* Visível em dispositivos móveis */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1001; /* Garante que o botão fique acima de outros elementos */
+    border: 2px solid rgb(255, 255, 255); /* Borda amarela */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 5px; /* Adiciona um espaçamento interno para a borda */
+}

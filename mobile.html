@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace Free</title>
+    <link rel="stylesheet" href="styles-mobile.css">
+    <link rel="icon" href="minecoin.png" type="image/png"> <!-- Adiciona o favicon -->
+</head>
+<body>
+    <div class="header">
+        <img src="icones/logo.png" alt="Logo" id="logo-banner">
+        <input type="text" id="search-bar" placeholder="Buscar pelo nome...">
+        <span id="menu-toggle" class="menu-icon">&#9776;</span> <!-- Ícone do menu -->
+    </div>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <button onclick="changeSection('procure')">
+                <img src="icones/procure.png" alt="Procura" class="icon"> Procura
+            </button>
+            <button onclick="changeSection('popular')">
+                <img src="icones/popular.png" alt="Popular" class="icon"> Popular
+            </button>
+            <button onclick="changeSection('mundos')">
+                <img src="icones/mundo.png" alt="Mundos" class="icon"> Mundos
+            </button>
+            <button onclick="changeSection('addon')">
+                <img src="icones/addon.png" alt="Add-Ons" class="icon"> Add-Ons
+            </button>
+            <button onclick="changeSection('textura')">
+                <img src="icones/textura.png" alt="Texturas" class="icon"> Texturas
+            </button>
+            <button onclick="changeSection('personagens')">
+                <img src="icones/persona.png" alt="Personagens" class="icon"> Personagens
+            </button>
+            <button onclick="changeSection('shader')">
+                <img src="icones/shader.png" alt="Shaders" class="icon"> Shaders
+            </button>
+        </div>
+        <div class="content" id="content">
+            <div id="results" class="scrollable-content">
+                <!-- Resultados da busca serão exibidos aqui -->
+            </div>
+        </div>
+    </div>
+    <script src="scripts-mobile.js"></script> <!-- Script para funcionalidades mobile -->
+</body>
+</html>
