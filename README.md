@@ -4,7 +4,7 @@ Bem-vindo ao repositório do **MarketPlace Free**! Este projeto oferece um site 
 
 ## Sobre o Projeto  
 
-O **MarketPlace Free**, anteriormente conhecido como **ArcanjoCoin**, é uma plataforma que permite aos jogadores de Minecraft acessar diversos conteúdos adicionais sem custos. Além do site, este repositório contém os lançamentos de aplicativos para Windows e Android.  
+O **MarketPlace Free**, anteriormente conhecido como **Marketplace Free**, é uma plataforma que permite aos jogadores de Minecraft acessar diversos conteúdos adicionais sem custos. Além do site, este repositório contém os lançamentos de aplicativos para Windows e Android.  
 
 ## O que é DLC?  
 
