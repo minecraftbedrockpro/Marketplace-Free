@@ -38,7 +38,7 @@ body {
 #search-bar:focus {
     border-color: #ffffff;
     outline: none;
-    background-color: #000000; /* Cor de fundo ao focar */
+    background-color: #ffffff; /* Cor de fundo ao focar */
 }
 
 .container {
