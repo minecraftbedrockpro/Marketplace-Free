@@ -185,19 +185,6 @@ body {
     justify-content: center; /* Centraliza horizontalmente */
 }
 
-/* Ocultar botões sociais em dispositivos móveis */
-.social-buttons {
-    display: flex;
-    flex-direction: column; /* Coloca os ícones em uma coluna */
-    align-items: center; /* Centraliza os ícones horizontalmente */
-    margin-top: 20px; /* Ajuste o espaço superior conforme necessário */
-}
-
-@media (max-width: 768px) {
-    .social-buttons {
-        display: none; /* Oculta os botões sociais em dispositivos móveis */
-    }
-}
 /* Estilo para o título da seção "Procure" */
 #procure-section h1 {
     color: white;

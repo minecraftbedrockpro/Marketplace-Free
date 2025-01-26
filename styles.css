@@ -3,6 +3,9 @@ body {
     margin: 0;
     padding: 0;
     overflow-x: hidden; /* Evita rolagem horizontal */
+    user-select: none; /* Impedir seleção de texto */
+    -webkit-user-select: none; /* Para navegadores WebKit */
+    -moz-user-select: none; /* Para Firefox */
 }
 
 .header {
@@ -105,11 +108,18 @@ body {
     justify-content: flex-start; /* Alinha os produtos no início */
     gap: 20px; /* Espaço entre os produtos */
 }
-
+.produtos-container {
+    display: flex;
+    flex-wrap: wrap; /* Para permitir quebra de linha se necessário */
+    justify-content: center; /* Centraliza os produtos horizontalmente */
+    user-select: none; /* Impedir seleção de texto e imagem em toda a área */
+    -webkit-user-select: none; /* Para navegadores WebKit */
+    -moz-user-select: none; /* Para Firefox */
+}
 .produto {
     display: inline-block;
     width: 200px;
-    margin: 5px 5px; /* Adiciona margem para espaçar os produtos */
+    margin: 10px; /* Adiciona margem para espaçar os produtos */
     text-align: center;
     border: 2px solid #000000; /* Adiciona uma borda preta ao contêiner */
     border-radius: 8px; /* Borda arredondada */
@@ -122,10 +132,6 @@ body {
     color: inherit;         /* Herda a cor do contêiner */
     display: block;         /* Faz o link ocupar toda a área do produto */
     pointer-events: auto;   /* Permite interação com o link */
-}
-
-.produto a:hover {
-    pointer-events: none; /* Desabilita o comportamento de hover para evitar o tooltip */
 }
 
 .produto-imagem {
@@ -155,140 +161,6 @@ body {
     justify-content: center; /* Centraliza horizontalmente */
 }
 
-/* Estilo para os botões de redes sociais em coluna */
-.social-buttons {
-    display: flex;
-    flex-direction: column; /* Coloca os ícones em uma coluna */
-    align-items: center;     /* Centraliza os ícones horizontalmente */
-    margin-top: 20px;        /* Ajuste o espaço superior conforme necessário */
-    position: absolute;      /* Permite controlar a posição dos ícones */
-    bottom: 120px;            /* Coloca os ícones no fundo da tela */
-    left: 25px;              /* Ajuste a distância da lateral esquerda */
-}
-
-.social-btn {
-    margin: 10px 0; /* Espaço entre os ícones */
-}
-
-.social-icon {
-    width: 40px;
-    height: 40px;
-    transition: transform 0.3s ease;
-}
-
-.social-icon:hover {
-    transform: scale(1.1);
-}
-/* Responsividade para dispositivos móveis */
-@media (max-width: 768px) {
-    /* Ajustes para a barra de navegação e cabeçalho */
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-    }
-
-    .header #logo-banner {
-        height: 40px; /* Ajuste o tamanho da logo */
-    }
-
-    #search-bar {
-        width: 100%;
-        margin-top: 10px; /* Dá espaço entre a logo e a barra de pesquisa */
-    }
-
-    /* Ajuste para a sidebar */
-    .sidebar {
-        width: 100%;
-        position: relative;
-        top: 100px; /* Ajuste o espaço após o cabeçalho */
-        min-height: auto;
-        padding: 10px;
-    }
-
-    .sidebar button {
-        width: 100%;
-        padding: 15px;
-        font-size: 16px;
-    }
-
-    .social-buttons {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-around;
-        width: 100%;
-    }
-
-    .social-buttons a {
-        margin: 0 10px;
-    }
-
-    .social-icon {
-        width: 30px;
-        height: 30px;
-    }
-
-    /* Ajuste para o conteúdo */
-    .content {
-        margin-left: 0;
-        padding: 10px;
-        height: auto;
-    }
-
-    .content #results {
-        margin-top: 10px;
-    }
-
-    .produto {
-        width: 45%;
-        margin: 10px 5%;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Ajuste para telas muito pequenas */
-    .header {
-        padding: 5px;
-    }
-
-    .header #logo-banner {
-        height: 30px; /* Ajuste para telas muito pequenas */
-    }
-
-    #search-bar {
-        width: 100%;
-        font-size: 14px;
-    }
-
-    .sidebar button {
-        padding: 12px;
-        font-size: 14px;
-    }
-
-    .social-buttons {
-        flex-direction: row;
-        justify-content: space-evenly;
-        margin-top: 10px;
-    }
-
-    .social-icon {
-        width: 25px;
-        height: 25px;
-    }
-
-    .content {
-        padding: 10px;
-    }
-
-    .produto {
-        width: 100%;
-        margin: 10px 0;
-    }
-}
 /* Estilo para a barra de rolagem geral */
 ::-webkit-scrollbar {
     width: 12px; /* Largura da barra de rolagem */
