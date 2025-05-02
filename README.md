@@ -32,7 +32,7 @@ Acesse o site do **MarketPlace Free** para explorar e baixar conteúdos. Navegue
 
 ## Contribuição  
 
-Atualmente, o projeto está sendo desenvolvido por uma única pessoa. No futuro, planejamo expandir com a ajuda de uma equipe de colaboradores. Caso tenha interesse em contribuir, sinta-se à vontade para entrar em contato.  
+Atualmente, o projeto está sendo desenvolvido por uma única pessoa. No futuro, planejamo deletar o projeto.
 
 ---
 

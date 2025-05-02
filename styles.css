@@ -1,13 +1,19 @@
+/* Cursor padrão do site */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Evita rolagem horizontal */
-    user-select: none; /* Impedir seleção de texto */
-    -webkit-user-select: none; /* Para navegadores WebKit */
-    -moz-user-select: none; /* Para Firefox */
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  cursor: url('icones/cursor.png') 0 0, auto;
 }
 
+/* Cursor para elementos clicáveis */
+a, button, .clicavel {
+  cursor: url('icones/cursor-clicavel.png') 0 0, pointer;
+}
 .header {
     background-color: #000; /* Preto */
     padding: 20px;
@@ -75,13 +81,15 @@ body {
     cursor: pointer;
     text-align: center; /* Centraliza texto */
     transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    cursor: url('icones/cursor-clicavel.png') 0 0, pointer;
 }
 
-/* Estilo para o ícone e texto do botão */
 .sidebar .icon {
     height: 30px;
-    margin-right: 3px; /* Espaçamento entre ícone e texto */
+    width: auto;
+    image-rendering: auto; /* ou 'crisp-edges' para pixel art */
 }
+
 
 /* Estilo para o botão selecionado */
 .sidebar button.selected {
@@ -181,4 +189,45 @@ body {
 /* Estilo para o polegar da barra de rolagem quando está ativo */
 ::-webkit-scrollbar-thumb:hover {
     background-color: #777; /* Cor do polegar ao passar o mouse */
+}
+/* Estilo para o título da seção */
+.section h2 {
+    text-align: center;
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px; /* Adiciona um espaçamento abaixo do título */
+}
+
+/* Estilo para o layout da seção (ajustando o fundo e o alinhamento) */
+.section {
+    padding: 20px;
+    background-color: #222;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+/* Estilo para cada produto */
+.produto {
+    display: inline-block;
+    width: 30%;
+    margin: 10px 1%;
+    text-align: center;
+    background-color: #333;
+    padding: 15px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* Estilo para a imagem do produto */
+.produto img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* Ajustes para o título do produto */
+.produto h2 {
+    color: white;
+    font-size: 16px;
+    margin-top: 10px;
 }

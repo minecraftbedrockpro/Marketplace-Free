@@ -21,23 +21,51 @@ function changeSection(section) {
     }
 }
 
-// Função para carregar todas as seções, exceto "popular"
 function loadAllSections() {
-    const sections = ['mundos', 'addon', 'textura', 'personagens', 'shader'];
+    const sections = ['mundos', 'addon', 'textura', 'shader'];
+    const sectionInfo = {
+        mundos: { name: 'Mundos', icon: 'icones/mundo.png' },
+        addon: { name: 'Add-Ons', icon: 'icones/addon.png' },
+        textura: { name: 'Texturas', icon: 'icones/textura.png' },
+        shader: { name: 'Shader', icon: 'icones/shader.png' }
+    };
+
     let allProducts = '';
 
-    // Carregar todas as seções
-    Promise.all(sections.map(section => 
-        fetch(`secoes/${section}.html`)
+    // Função para carregar uma seção com seus produtos
+    function loadSection(section) {
+        return fetch(`secoes/${section}.html`)
             .then(response => response.text())
             .then(data => {
-                allProducts += data; // Adiciona diretamente o conteúdo sem divs extras
+                const { name, icon } = sectionInfo[section];
+
+                // Adiciona o título da categoria e ícone
+                allProducts += `
+                    <div style="display: flex; align-items: center; gap: 10px; background-color: #333; padding: 10px; border-radius: 8px; margin: 20px 0 10px;">
+                        <img src="${icon}" alt="${name}" style="width: 24px; height: 24px;">
+                        <h2 style="color: white; margin: 0;">${name}</h2>
+                    </div>
+                `;
+
+                // Adiciona os produtos da categoria
+                allProducts += data;
             })
-            .catch(error => console.error('Erro ao carregar a seção:', error))
-    )).then(() => {
-        document.getElementById('results').innerHTML = allProducts;
-    });
+            .catch(error => console.error(`Erro ao carregar a seção ${section}:`, error));
+    }
+
+    // Resetar a área de resultados antes de carregar as novas seções
+    const resultsContainer = document.getElementById('results');
+    resultsContainer.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+    // Carregar as seções na ordem especificada
+    Promise.all(sections.map(loadSection))
+        .then(() => {
+            // Atualiza a área de resultados com o conteúdo das seções carregadas
+            resultsContainer.innerHTML = allProducts;
+        })
+        .catch(error => console.error('Erro ao carregar todas as seções:', error));
 }
+
 
 // Função de busca
 document.getElementById('search-bar').addEventListener('input', function() {
