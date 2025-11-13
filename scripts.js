@@ -15,7 +15,10 @@ function changeSection(section) {
         fetch(`secoes/${section}.html`)
             .then(response => response.text())
             .then(data => {
-                document.getElementById('results').innerHTML = data;
+                const results = document.getElementById('results');
+                results.innerHTML = data;
+                // esconder produtos sem imagem após inserir o HTML
+                hideProductsWithoutImages(results);
             })
             .catch(error => console.error('Erro ao carregar a seção:', error));
     }
@@ -62,10 +65,49 @@ function loadAllSections() {
         .then(() => {
             // Atualiza a área de resultados com o conteúdo das seções carregadas
             resultsContainer.innerHTML = allProducts;
+            // esconder produtos sem imagem após inserir o HTML consolidado
+            hideProductsWithoutImages(resultsContainer);
         })
         .catch(error => console.error('Erro ao carregar todas as seções:', error));
 }
 
+// Função para esconder produtos sem imagem (ou marcados com ❌)
+function hideProductsWithoutImages(container) {
+    if (!container) return;
+    const produtos = container.querySelectorAll('.produto');
+    produtos.forEach(produto => {
+        const imgEl = produto.querySelector('.produto-imagem');
+        if (!imgEl) return;
+
+        // Caso o placeholder seja uma div com ❌ (marcador manual)
+        if (imgEl.tagName === 'DIV' && imgEl.textContent.includes('❌')) {
+            produto.style.display = 'none';
+            return;
+        }
+
+        // Caso seja uma <img>, monitorar erro de carregamento
+        if (imgEl.tagName === 'IMG') {
+            const src = imgEl.getAttribute('src') || '';
+            if (!src.trim()) { produto.style.display = 'none'; return; }
+
+            // Se já carregou e está inválida
+            if (imgEl.complete && imgEl.naturalWidth === 0) {
+                produto.style.display = 'none';
+                return;
+            }
+
+            // Adiciona listeners para esconder produto se a imagem falhar
+            imgEl.addEventListener('error', () => {
+                produto.style.display = 'none';
+            });
+
+            // Caso carregue com sucesso, garante que produto fique visível
+            imgEl.addEventListener('load', () => {
+                produto.style.display = '';
+            });
+        }
+    });
+}
 
 // Função de busca
 document.getElementById('search-bar').addEventListener('input', function() {
@@ -90,6 +132,8 @@ document.getElementById('search-bar').addEventListener('input', function() {
         loadAllSections(); // Carrega todas as seções novamente
     } else if (results) {
         resultsContainer.innerHTML = results; // Exibe apenas os produtos encontrados
+        // esconder produtos sem imagem nos resultados de busca
+        hideProductsWithoutImages(resultsContainer);
     } else {
         // Aplica o fundo correto para a área de "Nenhum produto encontrado"
         resultsContainer.innerHTML = '<p style="background-color: #222; color: #fff; padding: 20px; margin: 0;">Nenhum produto encontrado.</p>';
