@@ -10,32 +10,32 @@
 <body>
     <div class="header">
         <img src="icones/logo.png" alt="Logo" id="logo-banner">
+        <div class="sidebar">
+            <button onclick="changeSection('procure')">
+                <span class="sidebar-item-content"><img src="icones/procure.png" alt="Procure" class="icon"><span class="sidebar-label">Procure</span></span>
+            </button>
+            <button onclick="changeSection('popular')">
+                <span class="sidebar-item-content"><img src="icones/popular.png" alt="Popular" class="icon"><span class="sidebar-label">Popular</span></span>
+            </button>
+            <button onclick="changeSection('mundos')">
+                <span class="sidebar-item-content"><img src="icones/mundo.png" alt="Mundos" class="icon"><span class="sidebar-label">Mundos</span></span>
+            </button>
+            <button onclick="changeSection('addon')">
+                <span class="sidebar-item-content"><img src="icones/addon.png" alt="Add-Ons" class="icon"><span class="sidebar-label">Add-Ons</span></span>
+            </button>
+            <button onclick="changeSection('textura')">
+                <span class="sidebar-item-content"><img src="icones/textura.png" alt="Texturas Packs" class="icon"><span class="sidebar-label">Texturas</span></span>
+            </button>
+            <button onclick="changeSection('shader')">
+                <span class="sidebar-item-content"><img src="icones/shader.png" alt="Shader" class="icon"><span class="sidebar-label">Shader</span></span>
+            </button>
+            <button onclick="changeSection('personagens')">
+                <span class="sidebar-item-content"><img src="icones/persona.png" alt="Skins" class="icon"><span class="sidebar-label">Skins</span></span>
+            </button>
+        </div>
         <input type="text" id="search-bar" placeholder="Buscar pelo nome...">
     </div>
     <div class="container">
-        <div class="sidebar">
-            <button onclick="changeSection('procure')">
-                <img src="icones/procure.png" alt="Procure" class="icon"> Procure
-            </button>
-            <button onclick="changeSection('popular')">
-                <img src="icones/popular.png" alt="Popular" class="icon"> Popular
-            </button>
-            <button onclick="changeSection('mundos')">
-                <img src="icones/mundo.png" alt="Mundos" class="icon"> Mundos
-            </button>
-            <button onclick="changeSection('addon')">
-                <img src="icones/addon.png" alt="Add-Ons" class="icon"> Add-Ons
-            </button>
-            <button onclick="changeSection('textura')">
-                <img src="icones/textura.png" alt="Texturas Packs" class="icon"> Texturas
-            </button>
-            <button onclick="changeSection('shader')">
-                <img src="icones/shader.png" alt="Shader" class="icon"> Shader
-            </button>
-            <button onclick="changeSection('personagens')">
-                <img src="icones/persona.png" alt="Personagens" class="icon"> Persona
-            </button>
-        </div>
 
         <div class="content">
             <div id="results" class="scrollable-content">
@@ -44,6 +44,7 @@
         </div>
     </div>
     <script src="redirect.js"></script> <!-- Script para redirecionar dispositivos móveis -->
+    <script src="gitlab-mc.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>

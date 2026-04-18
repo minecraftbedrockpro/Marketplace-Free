@@ -16,9 +16,10 @@ a, button, .clicavel {
 }
 .header {
     background-color: #000; /* Preto */
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
+    padding: 10px 20px;
+    display: grid;
+    grid-template-columns: 190px 1fr 220px;
+    gap: 12px;
     align-items: center;
     position: fixed; /* Fixa o cabeçalho no topo */
     top: 0;
@@ -30,17 +31,22 @@ a, button, .clicavel {
 
 .header #logo-banner {
     height: 25px; /* Ajuste o tamanho conforme necessário */
+    flex-shrink: 0;
+    align-self: center;
 }
 
 /* Estilo para a barra de busca */
 #search-bar {
-    width: 300px;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 2px solid #ffffff;
     border-radius: 5px;
     background-color: #000000; /* Altere a cor de fundo conforme necessário */
     transition: border-color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
 }
 
 /* Estilo para a barra de busca quando focada */
@@ -51,29 +57,35 @@ a, button, .clicavel {
 }
 
 .container {
-    display: flex;
-    margin-top: 80px; /* Deixa espaço para o cabeçalho fixo */
+    display: block;
+    margin-top: 62px; /* Deixa espaço para o cabeçalho fixo */
 }
 
 .sidebar {
-    background-color: #000; /* Preto */
+    background-color: transparent;
     color: white;
-    padding: 20px;
-    width: 200px;
-    min-height: 100vh;
-    position: fixed; /* Fixa o menu na lateral */
-    top: 80px; /* Deixa espaço para o cabeçalho */
-    left: 0;
-    z-index: 999; /* Garante que o menu fique acima do conteúdo */
+    padding: 0;
+    width: 100%;
+    min-height: 0;
+    position: static;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    align-self: center;
+    z-index: 999;
 }
 
 /* Estilo para os botões do menu lateral */
 .sidebar button {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center; /* Centraliza conteúdo horizontalmente */
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 6px 8px;
+    margin-bottom: 0;
     background-color: #aa141400; /* Quase preto */
     color: rgb(255, 255, 255);
     border: 2px solid transparent;
@@ -84,8 +96,16 @@ a, button, .clicavel {
     cursor: url('icones/cursor-clicavel.png') 0 0, pointer;
 }
 
+.sidebar-item-content {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
 .sidebar .icon {
-    height: 30px;
+    height: 19px;
     width: auto;
     image-rendering: auto; /* ou 'crisp-edges' para pixel art */
 }
@@ -93,28 +113,52 @@ a, button, .clicavel {
 
 /* Estilo para o botão selecionado */
 .sidebar button.selected {
-    border: 2px solid #00ff00; /* Borda verde para o botão selecionado */
+    border-color: transparent;
+}
+
+.sidebar-label {
+    display: inline-block;
+}
+
+.sidebar button.selected::after {
+    display: none;
+}
+
+.sidebar button.selected .sidebar-item-content::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -7px;
+    width: 100%;
+    height: 3px;
+    background: #ff9f1c;
+    border-radius: 999px;
 }
 
 .content {
     flex: 1;
-    padding: 20px;
+    padding: 8px 24px 24px;
     background-color: #222; /* Cor de fundo cinza escuro */
     color: white;
-    margin-left: 220px; /* Deixa espaço para o menu fixo */
-    padding-top: 20px; /* Dá uma folga no topo para o conteúdo */
-    height: calc(100vh - 80px); /* A altura do conteúdo deve ser o restante da altura da tela após o cabeçalho */
+    margin-left: 0;
+    padding-top: 2px;
+    height: calc(100vh - 62px);
     overflow-y: auto; /* Permite rolagem apenas na área de conteúdo */
     box-sizing: border-box; /* Inclui padding e bordas no cálculo de largura/altura */
 }
 
 .content #results {
-    margin-top: 20px;
+    margin-top: 0;
     height: 100%; /* Asegura que o contêiner de resultados ocupe toda a altura da seção */
     display: flex;
     flex-wrap: wrap; /* Faz os produtos quebrarem para a próxima linha */
     justify-content: flex-start; /* Alinha os produtos no início */
-    gap: 20px; /* Espaço entre os produtos */
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 14px 20px; /* Espaço entre os produtos */
+    padding: 4px 8px 36px;
+    padding-bottom: 36px;
+    box-sizing: border-box;
 }
 .produtos-container {
     display: flex;
@@ -126,12 +170,13 @@ a, button, .clicavel {
 }
 .produto {
     display: inline-block;
-    width: 200px;
-    margin: 10px; /* Adiciona margem para espaçar os produtos */
+    width: calc(25% - 24px);
+    min-width: 220px;
+    margin: 0;
     text-align: center;
     border: 2px solid #000000; /* Adiciona uma borda preta ao contêiner */
     border-radius: 8px; /* Borda arredondada */
-    padding: 1px; /* Adiciona padding para espaçamento interno */
+    padding: 1px;
     transition: transform 0.2s;
 }
 
@@ -153,8 +198,18 @@ a, button, .clicavel {
 }
 
 .produto h2 {
-    font-size: 19px;
-    margin: 10px 0 0; /* Ajusta a margem superior para mover o título para cima */
+    font-size: 16px;
+    margin: 5px 0 0;
+}
+
+@media (max-width: 1220px) {
+    .header {
+        grid-template-columns: 160px 1fr 190px;
+    }
+
+    .produto {
+        width: calc(33.333% - 20px);
+    }
 }
 
 .no-results {
@@ -230,4 +285,192 @@ a, button, .clicavel {
     color: white;
     font-size: 16px;
     margin-top: 10px;
+}
+
+.produto--gitlab-mc {
+    vertical-align: top;
+}
+
+.gitlab-mc-panel {
+    width: 100%;
+    background: #333;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+.gitlab-mc-panel h2,
+.gitlab-mc-panel p {
+    margin: 0 0 8px;
+}
+
+.gitlab-mc-meta {
+    text-align: center;
+    padding: 6px 10px 8px;
+}
+
+.gitlab-mc-meta p {
+    margin: 0 0 4px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: #8d8d8d;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.gitlab-mc-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #f0d27a;
+    font-weight: 700;
+}
+
+.gitlab-mc-rating-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background-image: url('icones/estrela-rating.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    flex-shrink: 0;
+}
+
+.gitlab-mc-time {
+    color: #8d8d8d;
+}
+
+.gitlab-mc-link {
+    color: #6cff74;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.gitlab-mc-muted {
+    color: #bdbdbd;
+    font-size: 14px;
+}
+
+.gitlab-mc-refresh {
+    background: #111;
+    color: white;
+    border: 1px solid #6cff74;
+    border-radius: 6px;
+    padding: 10px 14px;
+}
+
+.produto-imagem--placeholder {
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2b2b2b, #3c3c3c);
+    color: #6cff74;
+    font-weight: bold;
+}
+
+.gitlab-mc-version-button {
+    width: 100%;
+    background: #111;
+    color: #ff9f1c;
+    border: 1px solid #ff9f1c;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: url('icones/cursor-clicavel.png') 0 0, pointer;
+    transition: background .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+.gitlab-mc-version-button:hover {
+    background: #3a2412;
+    box-shadow: 0 0 0 2px rgba(255, 159, 28, 0.24);
+    transform: translateY(-1px);
+}
+
+.gitlab-mc-version-button[disabled] {
+    opacity: 0.82;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+}
+
+.gitlab-mc-version-button[disabled]:hover {
+    background: #111;
+    box-shadow: none;
+    transform: none;
+}
+
+.gitlab-mc-version-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+}
+
+.gitlab-mc-version-modal--open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gitlab-mc-version-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.78);
+}
+
+.gitlab-mc-version-sheet {
+    position: relative;
+    width: min(420px, calc(100vw - 32px));
+    max-height: min(680px, calc(100vh - 48px));
+    overflow-y: auto;
+    background: #202020;
+    border: 2px solid #6cff74;
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.gitlab-mc-version-sheet h2 {
+    margin: 0 40px 16px 0;
+    color: white;
+}
+
+.gitlab-mc-version-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #777;
+    background: #111;
+    color: white;
+    font-size: 22px;
+}
+
+.gitlab-mc-version-option {
+    display: block;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: #303030;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.gitlab-mc-version-option span,
+.gitlab-mc-version-option small {
+    display: block;
+}
+
+.gitlab-mc-version-option small {
+    margin-top: 4px;
+    color: #bdbdbd;
 }

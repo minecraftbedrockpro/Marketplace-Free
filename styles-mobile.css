@@ -2,206 +2,353 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow-x: hidden; /* Evita rolagem horizontal */
+    overflow-x: hidden;
+    background: #222;
+    color: white;
 }
 
 .header {
-    background-color: #000; /* Preto */
-    padding: 15px;
+    background-color: #000;
+    padding: 14px 14px 12px;
     display: flex;
-    flex-direction: column; /* Organiza os elementos verticalmente */
-    align-items: flex-start; /* Alinha os elementos à esquerda */
-    position: fixed; /* Fixa o cabeçalho no topo */
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%; /* Faz o cabeçalho ocupar toda a largura */
-    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
-    box-sizing: border-box; /* Garante que o padding não altere a largura */
+    width: 100%;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .header #logo-banner {
-    height: 35px; /* Ajuste o tamanho conforme necessário */
-    margin-bottom: 10px;
+    height: 28px;
+    display: block;
 }
 
-/* Estilo para a barra de busca */
-#search-bar {
-    width: 74%; /* Ocupa toda a largura do cabeçalho */
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #ffffff;
-    border-radius: 5px;
-    background-color: #000000; /* Altere a cor de fundo conforme necessário */
-    transition: border-color 0.3s, background-color 0.3s;
+.mobile-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
-/* Estilo para a barra de busca quando focada */
-#search-bar:focus {
-    border-color: #ffffff;
-    outline: none;
-    background-color: #ffffff; /* Cor de fundo ao focar */
-}
-
-.menu-icon {
-    font-size: 30px; /* Tamanho do ícone */
-    cursor: pointer;
+.mobile-top-button {
+    min-width: 76px;
+    padding: 9px 12px;
+    border: 1px solid #ff9f1c;
+    border-radius: 999px;
+    background: #151515;
     color: white;
-    display: block; /* Visível em dispositivos móveis */
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1001; /* Garante que o botão fique acima de outros elementos */
+    font-size: 14px;
+    font-weight: 700;
 }
 
-/* Estilo para a sidebar em dispositivos móveis */
-.sidebar {
-    background-color: #000; /* Preto */
-    color: white;
-    padding: 20px;
-    padding-top: 120px; /* Adiciona um espaçamento no topo para ficar abaixo do cabeçalho */
-    width: auto; /* Largura automática para se ajustar ao conteúdo */
-    height: 100vh; /* Altura total da tela */
-    position: fixed; /* Fixa o menu na lateral */
-    top: 0;
-    left: -300px; /* Inicialmente oculto fora da tela */
-    z-index: 999; /* Garante que o menu fique acima do conteúdo */
-    transition: left 0.3s ease; /* Animação para abrir e fechar o menu */
-    white-space: nowrap; /* Evita que os botões quebrem em múltiplas linhas */
+.mobile-top-button-label {
+    display: inline-block;
+    white-space: nowrap;
 }
 
-.sidebar.open {
-    left: 0; /* Exibe o menu lateral */
+.mobile-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.64);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 1090;
 }
 
-/* Estilo para os botões do menu lateral */
-.sidebar button {
+.mobile-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-panel {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    top: 62px;
+    background: #1b1b1b;
+    border: 2px solid #ff9f1c;
+    border-radius: 18px;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 1100;
+}
+
+.mobile-panel.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+.mobile-panel-header {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Alinha o texto à esquerda */
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #aa141400; /* Quase preto */
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 16px 10px;
+}
+
+.mobile-panel-header h2 {
+    margin: 0;
+    font-size: 24px;
     color: white;
-    border: 2px solid transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-    white-space: nowrap; /* Evita que o texto do botão quebre em várias linhas */
 }
 
-.sidebar .icon {
-    height: 30px;
-    margin-right: 10px; /* Espaçamento entre ícone e texto */
+.mobile-panel-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #777;
+    background: #111;
+    color: white;
+    font-size: 24px;
+    line-height: 1;
 }
 
-.sidebar button.selected {
-    border: 2px solid #00ff00; /* Borda verde para o botão selecionado */
+.mobile-panel-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0 14px 16px;
+    max-height: min(70vh, 560px);
+    overflow-y: auto;
+}
+
+.mobile-section-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 12px 14px;
+    background: #2b2b2b;
+    color: white;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.mobile-section-button.selected {
+    background: #3a2412;
+    border-color: #ff9f1c;
+}
+
+.sidebar-item-content {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.icon {
+    height: 24px;
+    width: auto;
+}
+
+.sidebar-label {
+    display: inline-block;
+}
+
+.mobile-search-panel {
+    padding-bottom: 16px;
+}
+
+.mobile-search-body {
+    padding: 0 14px;
+}
+
+#search-bar {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 12px;
+    background-color: #000000;
+    transition: border-color 0.3s, background-color 0.3s;
+    box-sizing: border-box;
+    color: white;
+}
+
+#search-bar:focus {
+    border-color: #ff9f1c;
+    outline: none;
+}
+
+.container {
+    display: block;
+}
+
+.sidebar {
+    display: none;
 }
 
 .content {
-    padding: 20px;
-    background-color: #222; /* Cor de fundo cinza escuro */
+    padding: 16px 14px 24px;
+    background-color: #222;
     color: white;
-    margin-top: 100px; /* Deixa espaço para o cabeçalho fixo */
-    height: calc(100vh - 100px); /* A altura do conteúdo deve ser o restante da altura da tela após o cabeçalho */
-    overflow-y: auto; /* Permite rolagem apenas na área de conteúdo */
-    box-sizing: border-box; /* Inclui padding e bordas no cálculo de largura/altura */
+    margin-top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .content #results {
-    margin-top: 20px;
+    margin-top: 0;
     display: flex;
-    flex-wrap: wrap; /* Faz os produtos quebrarem para a próxima linha */
-    justify-content: center; /* Centraliza os produtos */
-    gap: 10px; /* Espaço entre os produtos */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 0 0 28px;
+    box-sizing: border-box;
 }
 
 .produto {
     display: inline-block;
-    width: calc(100% - 20px); /* Ajusta a largura do produto para ocupar a tela toda menos as margens */
-    margin: 10px 5px; /* Adiciona margem para espaçar os produtos */
+    width: 100%;
+    margin: 0;
     text-align: center;
-    border: 2px solid #000000; /* Adiciona uma borda preta ao contêiner */
-    border-radius: 8px; /* Borda arredondada */
-    padding: 5px; /* Adiciona padding para espaçamento interno */
+    border: 2px solid #000000;
+    border-radius: 10px;
+    padding: 4px;
     transition: transform 0.2s;
+    box-sizing: border-box;
 }
 
 .produto-imagem {
-    width: 100%; /* Ajusta a imagem para ocupar toda a largura do contêiner */
+    width: 100%;
     height: auto;
-    border-radius: 8px; /* Borda arredondada */
+    border-radius: 8px;
 }
 
 .produto h2 {
-    font-size: 18px; /* Tamanho da fonte um pouco menor para dispositivos móveis */
-    margin: 10px 0 5px; /* Ajusta a margem superior para mover o título para cima */
+    font-size: 18px;
+    margin: 8px 0 4px;
 }
 
 .produto a {
-    text-decoration: none; /* Remove o sublinhado */
-    color: inherit; /* Herda a cor do contêiner */
-    display: block; /* Faz o link ocupar toda a área do produto */
-    pointer-events: auto; /* Permite interação com o link */
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    pointer-events: auto;
 }
 
 .produto:hover {
-    transform: scale(1.05); /* Efeito de zoom no contêiner */
+    transform: scale(1.02);
 }
-
-/* Responsividade para dispositivos móveis */
-@media (max-width: 768px) {
-    .produto {
-        width: calc(100% - 20px); /* Ajusta a largura do produto para ocupar a tela toda menos as margens */
-        margin: 10px 5px; /* Adiciona margem para espaçar os produtos */
-    }
-
-    .produto h2 {
-        font-size: 16px; /* Tamanho da fonte menor para dispositivos móveis */
-    }
-}
-
-@media (max-width: 480px) {
-    .produto {
-        width: calc(100% - 20px); /* Ajusta a largura do produto para ocupar a tela toda menos as margens */
-        margin: 10px 5px; /* Adiciona margem para espaçar os produtos */
-    }
-
-    .produto h2 {
-        font-size: 14px; /* Tamanho da fonte ainda menor para telas muito pequenas */
-    }
-}
-
 
 .no-results {
-    background-color: #222; /* Cor de fundo cinza escuro */
+    background-color: #222;
     color: white;
     padding: 20px;
     text-align: center;
     margin: 0;
-    height: 100%; /* Garante que a área de "Nenhum produto encontrado" ocupe toda a altura */
+    height: 100%;
     display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;
+    justify-content: center;
 }
 
-/* Estilo para o título da seção "Procure" */
-#procure-section h1 {
-    color: white;
-    text-align: center;
-    margin-top: 20px;
-    font-size: 24px;
+.gitlab-mc-panel {
+    width: 100%;
+    background: #333;
+    border-radius: 8px;
+    padding: 16px;
+    box-sizing: border-box;
 }
-.menu-icon {
-    font-size: 30px; /* Tamanho do ícone */
-    cursor: pointer;
-    color: white;
-    display: block; /* Visível em dispositivos móveis */
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 1001; /* Garante que o botão fique acima de outros elementos */
-    border: 2px solid rgb(255, 255, 255); /* Borda amarela */
-    border-radius: 8px; /* Bordas arredondadas */
-    padding: 5px; /* Adiciona um espaçamento interno para a borda */
+
+.gitlab-mc-panel h2,
+.gitlab-mc-panel p {
+    margin: 0 0 8px;
+}
+
+.gitlab-mc-meta {
+    text-align: center;
+    padding: 8px 6px 6px;
+}
+
+.gitlab-mc-meta p {
+    margin: 0 0 8px;
+    font-size: 14px;
+    line-height: 1.35;
+    color: #8d8d8d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.gitlab-mc-rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #f0d27a;
+    font-weight: 700;
+}
+
+.gitlab-mc-rating-icon {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    background-image: url('icones/estrela-rating.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    flex-shrink: 0;
+}
+
+.gitlab-mc-time {
+    color: #8d8d8d;
+}
+
+.gitlab-mc-panel h2,
+.gitlab-mc-panel p {
+    margin: 0 0 8px;
+}
+
+.gitlab-mc-version-button {
+    width: 100%;
+    background: #111;
+    color: #ff9f1c;
+    border: 1px solid #ff9f1c;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-weight: bold;
+    transition: background .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+
+.gitlab-mc-version-button:active {
+    background: #3a2412;
+}
+
+.gitlab-mc-version-button[disabled] {
+    opacity: 1;
+}
+
+@media (max-width: 400px) {
+    .header {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .header #logo-banner {
+        height: 24px;
+    }
+
+    .mobile-top-button {
+        min-width: 68px;
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    .produto h2 {
+        font-size: 16px;
+    }
 }
