@@ -76,7 +76,7 @@ async function fetchSectionMarkup(section) {
     if (SECTION_STATIC_DISABLED.has(section)) return '';
     const response = await fetch(`secoes/${section}.html`);
     if (!response.ok) {
-        throw new Error(`Erro ao carregar a seção ${section}`);
+        return '';
     }
     const html = await response.text();
     const parsed = new DOMParser().parseFromString(html, 'text/html');
@@ -92,6 +92,7 @@ async function renderSection(section) {
     currentGitlabGroups = dynamic.groups;
     window.GitlabMcApp.bindVersionButtons(results, dynamic.groups);
     await window.GitlabMcApp.decorateFixedCards(results);
+    window.GitlabMcApp.bindVersionButtons(results, dynamic.groups);
     hideProductsWithoutImages(results);
 }
 
@@ -130,6 +131,7 @@ async function loadAllSections() {
     currentGitlabGroups = combinedGroups;
     window.GitlabMcApp.bindVersionButtons(results, combinedGroups);
     await window.GitlabMcApp.decorateFixedCards(results);
+    window.GitlabMcApp.bindVersionButtons(results, combinedGroups);
     hideProductsWithoutImages(results);
 }
 

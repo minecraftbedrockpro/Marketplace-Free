@@ -193,6 +193,29 @@ a, button, .clicavel {
     border-radius: 8px; /* Borda arredondada */
 }
 
+.gitlab-mc-image-wrap {
+    position: relative;
+}
+
+.gitlab-mc-new-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    min-width: 44px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(34, 201, 93, 0.92);
+    border: 1px solid #98ffb6;
+    color: #08140b;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    z-index: 2;
+}
+
 .produto:hover {
     transform: scale(1.05); /* Efeito de zoom no contêiner */
 }
