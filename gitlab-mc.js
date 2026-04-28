@@ -9,9 +9,10 @@
     firebaseMetaUrl: "https://rochawiki-4981e-default-rtdb.firebaseio.com/gitlabMc/meta.json",
     firebaseGroupsUrl: "https://rochawiki-4981e-default-rtdb.firebaseio.com/gitlabMc/items.json",
     firebaseFixedMetaUrl: "https://rochawiki-4981e-default-rtdb.firebaseio.com/gitlabMc/fixedMeta.json",
-    firebaseGroupsCacheKey: "gitlab-mc-firebase-groups-v1",
+    firebaseGroupsCacheKey: "gitlab-mc-firebase-groups-v2",
     firebaseFixedMetaCacheKey: "gitlab-mc-firebase-fixed-meta-v1",
     firebaseMetaCacheKey: "gitlab-mc-firebase-meta-v1",
+    seenGroupsCacheKey: "gitlab-mc-seen-groups-v1",
     firebaseCacheTtlMs: 1000 * 60 * 20,
     localFixedMetaUrl: "data/fixed-marketplace-meta.json",
     sources: [
@@ -46,6 +47,9 @@
     "realism shades": "Shader",
   };
   const RATING_STAR_ICON = "icones/estrela-rating.svg";
+  const PREFERRED_LOCALE = ((navigator.language || navigator.userLanguage || "en-us").toLowerCase().startsWith("pt")) ? "pt-br" : "en-us";
+  let latestFirebaseMeta = null;
+  let allGroupsPromise = null;
 
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -74,7 +78,9 @@
 
   function normalizeFilename(filename) {
     return filename
-      .replace(/\.[^.]+$/, "")
+      .replace(/\.(mcaddon|mcpack|mctemplate|zip)$/i, "")
+      .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+      .replace(/-/g, " ")
       .replace(/\(skin_pack\)/gi, "")
       .replace(/pack name/gi, "")
       .replace(/skin pack/gi, "")
@@ -113,7 +119,96 @@
   }
 
   function getProductTitle(product) {
-    return product.marketplaceTitle || product.displayName;
+    if (PREFERRED_LOCALE === "pt-br") {
+      return product.marketplaceTitlePt || product.titlePt || product.marketplaceTitle || product.marketplaceTitleEn || product.displayName;
+    }
+    return product.marketplaceTitleEn || product.titleEn || product.marketplaceTitle || product.marketplaceTitlePt || product.displayName;
+  }
+
+  function getFixedMetaTitle(meta, fallbackTitle = "") {
+    if (!meta) return fallbackTitle;
+    if (PREFERRED_LOCALE === "pt-br") {
+      return meta.titlePt || meta.title || meta.titleEn || fallbackTitle;
+    }
+    return meta.titleEn || meta.title || meta.titlePt || fallbackTitle;
+  }
+
+  function getGroupIdentity(group) {
+    const product = group?.current || {};
+    return String(
+      product.productId ||
+      product.marketplaceProductId ||
+      product.marketplaceUrlEn ||
+      product.marketplaceUrlPt ||
+      product.marketplaceUrl ||
+      group?.key ||
+      group?.id ||
+      getGroupKey(product)
+    ).trim();
+  }
+
+  function getFirebaseMergeKey(group, index = 0) {
+    const current = group?.current || {};
+    const productId = String(
+      current.productId ||
+      current.marketplaceProductId ||
+      group?.productId ||
+      ""
+    ).trim();
+
+    if (productId) {
+      return `pid:${productId}`;
+    }
+
+    return getGroupKey(current) || group?.key || `gitlab-mc-firebase-merged-${index}`;
+  }
+
+  function readSeenGroupsState() {
+    try {
+      const raw = localStorage.getItem(CONFIG.seenGroupsCacheKey);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === "object" ? parsed : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function writeSeenGroupsState(lastSync, seenIds) {
+    try {
+      localStorage.setItem(CONFIG.seenGroupsCacheKey, JSON.stringify({
+        savedAt: Date.now(),
+        lastSync: lastSync || "",
+        seenIds: Array.from(new Set((seenIds || []).filter(Boolean))),
+      }));
+    } catch (error) {
+      console.warn("Nao foi possivel salvar o estado de novidades.", error);
+    }
+  }
+
+  function applySeenGroupsState(groups, lastSync = "") {
+    if (!Array.isArray(groups) || !groups.length) return groups;
+
+    const currentIds = groups.map(getGroupIdentity).filter(Boolean);
+    const stored = readSeenGroupsState();
+    const seenIds = new Set(Array.isArray(stored?.seenIds) ? stored.seenIds : []);
+    const firstVisit = seenIds.size === 0;
+    const syncChanged = String(stored?.lastSync || "") !== String(lastSync || "");
+
+    groups.forEach((group) => {
+      const identity = getGroupIdentity(group);
+      const isNew = !firstVisit && Boolean(identity) && !seenIds.has(identity);
+      group.isNew = isNew;
+      if (group.current) {
+        group.current.isNew = isNew;
+      }
+    });
+
+    if (firstVisit || syncChanged || currentIds.some((id) => !seenIds.has(id)) || seenIds.size !== currentIds.length) {
+      writeSeenGroupsState(lastSync, currentIds);
+    }
+
+    return groups;
   }
 
   function mapPackTypeToCategory(packType) {
@@ -394,13 +489,17 @@
 
   async function fetchFirebaseMeta() {
     const cached = readCache(CONFIG.firebaseMetaCacheKey, CONFIG.firebaseCacheTtlMs);
-    if (cached) return cached;
+    if (cached) {
+      latestFirebaseMeta = cached;
+      return cached;
+    }
     if (!CONFIG.firebaseMetaUrl) return null;
     try {
       const response = await fetch(CONFIG.firebaseMetaUrl, { cache: "no-store" });
       if (!response.ok) return null;
       const payload = await response.json();
       if (!payload || typeof payload !== "object") return null;
+      latestFirebaseMeta = payload;
       writeCache(CONFIG.firebaseMetaCacheKey, payload);
       return payload;
     } catch (error) {
@@ -427,7 +526,7 @@
 
       const mergedMap = new Map();
     rawGroups.forEach((group, index) => {
-      const mergeKey = getGroupKey(group.current) || group.key || `gitlab-mc-firebase-merged-${index}`;
+      const mergeKey = getFirebaseMergeKey(group, index);
       if (!mergedMap.has(mergeKey)) {
         mergedMap.set(mergeKey, {
           id: group.id || `gitlab-mc-firebase-merged-${index}`,
@@ -554,15 +653,19 @@
   }
 
   function buildMetaFooter(rating, timeLabel, versionsCount, disabled = false, groupId = "") {
+    const formattedRating = formatRating(rating);
+    const showMetaLine = Boolean(formattedRating || timeLabel);
     return `
       <div class="gitlab-mc-meta">
-        <p>
-          <span class="gitlab-mc-rating">
-            <span class="gitlab-mc-rating-icon" aria-hidden="true"></span>
-            <span>${escapeHtml(formatRating(rating))}</span>
-          </span>
-          <span class="gitlab-mc-time">${escapeHtml(timeLabel || "")}</span>
-        </p>
+        ${showMetaLine ? `
+          <p>
+            <span class="gitlab-mc-rating">
+              <span class="gitlab-mc-rating-icon" aria-hidden="true"></span>
+              <span>${escapeHtml(formattedRating)}</span>
+            </span>
+            <span class="gitlab-mc-time">${escapeHtml(timeLabel || "")}</span>
+          </p>
+        ` : ""}
         <button class="gitlab-mc-version-button" type="button"${groupId ? ` data-group-id="${escapeHtml(groupId)}"` : ""}${disabled ? " disabled" : ""}>${escapeHtml(String(versionsCount))} versoes</button>
       </div>
     `;
@@ -576,20 +679,39 @@
     `;
   }
 
-  function buildCard(group) {
-    const product = group.current;
+  function buildNewBadge(product) {
+    if (!product?.isNew) return "";
+    return `
+      <span
+        class="gitlab-mc-new-badge"
+        title="Novo desde a sua ultima visita"
+        aria-label="Novo desde a sua ultima visita"
+      >Novo</span>
+    `;
+  }
+
+  function buildImageMarkup(product) {
     const imageMarkup = product.marketplaceImage
-      ? `<img src="${escapeHtml(product.marketplaceImage)}" alt="${escapeHtml(product.marketplaceTitle || product.displayName)}" class="produto-imagem">`
+      ? `<img src="${escapeHtml(product.marketplaceImage)}" alt="${escapeHtml(getProductTitle(product))}" class="produto-imagem">`
       : buildPlaceholder(product);
 
+    return `
+      <div class="gitlab-mc-image-wrap">
+        ${imageMarkup}
+        ${buildNewBadge(product)}
+      </div>
+    `;
+  }
+
+  function buildCard(group) {
+    const product = group.current;
     const title = getProductTitle(product);
     const extraVersionsCount = Math.max(group.versions.length - 1, 0);
-    const versionButton = `<button class="gitlab-mc-version-button" type="button" data-group-id="${escapeHtml(group.id)}">${extraVersionsCount} versoes</button>`;
 
     return `
       <div class="produto produto--gitlab-mc">
         <a href="${escapeHtml(product.downloadUrl)}" target="_blank" rel="noopener noreferrer">
-          ${imageMarkup}
+          ${buildImageMarkup(product)}
           <h2>${escapeHtml(title)}</h2>
         </a>
         ${buildMetaFooter(product.marketplaceRating, formatUpdatedAt(product.gitlabUpdatedAt), extraVersionsCount, false, group.id)}
@@ -836,9 +958,11 @@
 
   async function decorateFixedCards(container) {
     const fixedMeta = await fetchFirebaseFixedMeta();
-    if (!fixedMeta || !container) return;
+    const allGroups = await getAllGroups();
+    if ((!fixedMeta && !allGroups?.length) || !container) return;
 
     const findFixedMeta = (title) => {
+      if (!fixedMeta) return null;
       const directKey = slugifyKey(title || "");
       if (fixedMeta[directKey]) return fixedMeta[directKey];
 
@@ -849,28 +973,69 @@
       return Object.values(fixedMeta).find((item) => normalizeFilename(item?.title || "").toLowerCase() === normalizedTitle) || null;
     };
 
+    const findDynamicGroup = (title, href) => {
+      const titleKey = getComparableName(title || "");
+      const hrefFilename = decodeURIComponent(String(href || "").split("/").pop() || "").replace(/\?.*$/, "");
+      const hrefKey = getComparableName(hrefFilename || "");
+      return allGroups.find((group) => {
+        const groupKey = group?.key || getGroupKey(group?.current || {});
+        return Boolean(
+          (titleKey && groupKey === titleKey) ||
+          (hrefKey && groupKey === hrefKey)
+        );
+      }) || null;
+    };
+
     container.querySelectorAll(".produto:not(.produto--gitlab-mc)").forEach((card) => {
       if (card.querySelector(".gitlab-mc-meta")) return;
       const titleElement = card.querySelector("h2");
       if (!titleElement) return;
+      const linkElement = card.querySelector("a[href]");
+      const dynamicGroup = findDynamicGroup(titleElement.textContent || "", linkElement?.getAttribute("href") || "");
+      if (dynamicGroup) {
+        titleElement.textContent = getProductTitle(dynamicGroup.current);
+        card.insertAdjacentHTML(
+          "beforeend",
+          buildMetaFooter(
+            dynamicGroup.current.marketplaceRating,
+            formatUpdatedAt(dynamicGroup.current.gitlabUpdatedAt),
+            Math.max(dynamicGroup.versions.length - 1, 0),
+            false,
+            dynamicGroup.id
+          )
+        );
+        const imageWrap = card.querySelector(".gitlab-mc-image-wrap") || card.querySelector(".produto-imagem")?.parentElement;
+        if (imageWrap && !card.querySelector(".gitlab-mc-new-badge") && dynamicGroup.current.isNew) {
+          imageWrap.classList.add("gitlab-mc-image-wrap");
+          imageWrap.insertAdjacentHTML("beforeend", buildNewBadge(dynamicGroup.current));
+        }
+        return;
+      }
       const meta = findFixedMeta(titleElement.textContent || "");
-      if (!meta) return;
+      titleElement.textContent = getFixedMetaTitle(meta, titleElement.textContent || "");
       card.insertAdjacentHTML(
         "beforeend",
-        buildMetaFooter(meta.rating, formatMarketplaceTime(meta.marketplaceTime), meta.versionsCount ?? 0, true)
+        buildMetaFooter(meta?.rating, formatMarketplaceTime(meta?.marketplaceTime), meta?.versionsCount ?? 0, true)
       );
     });
   }
 
   async function getAllGroups() {
-    const firebaseGroups = await fetchFirebaseGroups();
-    if (firebaseGroups) return firebaseGroups;
+    if (allGroupsPromise) return allGroupsPromise;
 
-    const [products, marketplaceCache] = await Promise.all([
-      fetchGitlabProducts(),
-      fetchMarketplaceCache(),
-    ]);
-    return buildProductGroups(enrichWithMarketplaceCache(products, marketplaceCache));
+    allGroupsPromise = (async () => {
+      const firebaseGroups = await fetchFirebaseGroups();
+      const lastSync = latestFirebaseMeta?.lastSync || "";
+      if (firebaseGroups) return applySeenGroupsState(firebaseGroups, lastSync);
+
+      const [products, marketplaceCache] = await Promise.all([
+        fetchGitlabProducts(),
+        fetchMarketplaceCache(),
+      ]);
+      return applySeenGroupsState(buildProductGroups(enrichWithMarketplaceCache(products, marketplaceCache)), lastSync);
+    })();
+
+    return allGroupsPromise;
   }
 
   async function getGroupsForSection(section) {
